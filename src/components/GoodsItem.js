@@ -1,5 +1,12 @@
 import React, { PureComponent } from "react";
+
+import { connect } from "react-redux";
+
 import "../styles.css";
+
+import store from '../redux/store';
+
+import { addGoodToCart } from "../redux/actions";
 
 
 class GoodsItem extends PureComponent {
@@ -14,10 +21,14 @@ class GoodsItem extends PureComponent {
           <span className="goods-item__price-value goods-item__price-value_new">{price}.00$</span>
         </p>
         <p className="goods-item__description">{description}</p>
-        <button className="goods-item__add-to-card">Add to cart</button>
+        <button className="goods-item__add-to-card" onClick={() => this.props.addGoodToCart(id)}>Add to cart</button>
       </div>
     );
   }
 }
 
-export default GoodsItem;
+const mapDispatchToProps = (_) => ({
+  addGoodToCart: (id) => store.dispatch(addGoodToCart(id))
+});
+
+export default connect(mapDispatchToProps)(GoodsItem);
